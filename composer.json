@@ -1,0 +1,17 @@
+{
+    "name": "derweili/rnk-vaccine-bot",
+    "authors": [
+        {
+            "name": "Julian Weiland",
+            "email": "jw@derweili.de"
+        }
+    ],
+    "require": {
+        "sqmk/pushy": "^1.4"
+    },
+	"autoload": {
+        "psr-4": {
+            "Derweili\\RnkBot\\": "inc/"
+        }
+    }
+}

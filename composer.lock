@@ -1,0 +1,71 @@
+{
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
+        "This file is @generated automatically"
+    ],
+    "content-hash": "7a3a4381d3174ab97ee40c08109d6289",
+    "packages": [
+        {
+            "name": "sqmk/pushy",
+            "version": "v1.4.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sqmk/Pushy.git",
+                "reference": "fe51ef53e4606b08570cf204619a1ef8fefcd788"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sqmk/Pushy/zipball/fe51ef53e4606b08570cf204619a1ef8fefcd788",
+                "reference": "fe51ef53e4606b08570cf204619a1ef8fefcd788",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "php": ">=5.4.0"
+            },
+            "require-dev": {
+                "mockery/mockery": "0.8.0",
+                "phpunit/phpunit": "3.7.25",
+                "squizlabs/php_codesniffer": "1.4.6"
+            },
+            "bin": [
+                "bin/pushy"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Pushy": "library/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Michael Squires",
+                    "email": "sqmk@php.net",
+                    "role": "lead"
+                }
+            ],
+            "description": "A PHP client for Pushover.net",
+            "homepage": "http://github.com/sqmk/Pushy",
+            "keywords": [
+                "client",
+                "pushover",
+                "pushy"
+            ],
+            "time": "2021-09-18T18:44:49+00:00"
+        }
+    ],
+    "packages-dev": [],
+    "aliases": [],
+    "minimum-stability": "stable",
+    "stability-flags": [],
+    "prefer-stable": false,
+    "prefer-lowest": false,
+    "platform": [],
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
+}
