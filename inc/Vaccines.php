@@ -9,7 +9,7 @@ class Vaccines {
 		return [
 			2 => "Biontech",
 			3 => "Moderna",
-			5 => "Johnson & Johnson",
+			// 5 => "Johnson & Johnson",
 		];
 	}
 
