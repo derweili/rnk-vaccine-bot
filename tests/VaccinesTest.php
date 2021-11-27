@@ -10,14 +10,13 @@ final class VaccinesTest extends TestCase
     {
         $vaccines = Vaccines::get_vaccines();
 
-				$this->assertIsArray($vaccines);
+        $this->assertIsArray($vaccines);
     }
 
     public function testShouldGetVaccineById() : void
     {
         $vaccine = Vaccines::get_vaccine_by_id(2);
 
-        // is string
         $this->assertIsString($vaccine);
 
         $exprected_name = "Biontech";

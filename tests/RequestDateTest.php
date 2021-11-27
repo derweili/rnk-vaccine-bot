@@ -141,7 +141,7 @@ final class RequestDateTest extends TestCase
 			'teststationId' => $demo_center_id,
 			'vaccineId' => $demo_vaccine_id,
 			'selfService' => true,
-		];
+        ];
 
         $this->assertEquals($exprected_data, $request_data);
     }
