@@ -1,5 +1,7 @@
 {
     "name": "derweili/rnk-vaccine-bot",
+    "description": "A bot scan the rhein-neckar-kreis vaccination appointment api",
+    "license": "MIT",
     "authors": [
         {
             "name": "Julian Weiland",
