@@ -9,5 +9,8 @@ API Stand 27.11.2021
 1. `config.example.php` umbenennen in `config.php`
 2. Pushover API Keys in `config.php` eintragen
 
+# API Abfragen
+`index.php` per Konsole oder Browser aufrufen. Idealerweise per Conjob.
+
 ## Benachrichitungen
 Benachrichtigungen laufen aktuell über pushover.net
