@@ -1,8 +1,8 @@
 # Rhein Neckar Kreis Vaccine Bot
 
-Bot der API von https://c19.rhein-neckar-kreis.de/impftermin abfragt und Benachrichtigungen über freie Impftermine versendet.
+Bot der die interne API von https://c19.rhein-neckar-kreis.de/impftermin abfragt und Benachrichtigungen über freie Impftermine versendet.
 
-API Stand 26.11.2021
+API Stand 27.11.2021
 
 ## Konfiguration
 
