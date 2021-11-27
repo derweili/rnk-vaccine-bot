@@ -8,15 +8,14 @@ class Vaccines {
 	public static function get_vaccines() {
 		return [
 			2 => "Biontech",
-			3 => "Moderna",
-			// 5 => "Johnson & Johnson",
+			3 => "Moderna"
 		];
 	}
 
 	public static function get_vaccine_by_id( $id ) {
-		$centers = self::get_vaccines();
-		if ( isset( $centers[ $id ] ) ) {
-			return $centers[ $id ];
+		$vaccines = self::get_vaccines();
+		if ( isset( $vaccines[ $id ] ) ) {
+			return $vaccines[ $id ];
 		}
 		return false;
 	}

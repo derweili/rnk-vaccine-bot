@@ -41,13 +41,19 @@ class RequestDate {
 		return $headers;
 	}
 
-	public function send_request() {
-
+	public function get_request_data() {
 		$data = [
 			'teststationId' => $this->center_id,
 			'vaccineId' => $this->vaccine_id,
 			'selfService' => true,
 		];
+
+		return $data;
+	}
+
+	public function send_request() {
+
+		$data = $this->get_request_data();
 
 		$ch = curl_init();
 		curl_setopt($ch, CURLOPT_URL, $this->base_url);
