@@ -8,7 +8,7 @@ class Vaccines {
 	public static function get_vaccines() {
 		return [
 			2 => "Biontech",
-			3 => "Moderna"
+			// 3 => "Moderna"
 		];
 	}
 

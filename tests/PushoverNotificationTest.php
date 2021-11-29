@@ -30,6 +30,15 @@ final class PushoverNotificationTest extends TestCase
         $this->setup_user_key();
     }
 
+    public function get_data(string $filename) {
+        $full_path = __DIR__ . '/data/' . $filename;
+
+        $data = file_get_contents($full_path);
+        $data = json_decode($data, true);
+
+        return $data;
+    }
+
     public function get_test_center_id() {
         $centers = new Centers();
         $demo_center_id = $centers->get_all_ids()[0];
@@ -76,6 +85,58 @@ final class PushoverNotificationTest extends TestCase
         $this->setup_api_key();
 
         $message = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id() ) )->get_available_vaccine_message();
+
+        $this->assertNotEmpty($message);
+        $this->assertIsString($message);
+    }
+
+    public function testShouldReturnArrayOfStrings() {
+        $this->setup_api_key();
+
+        $available_dates = $this->get_data('freeDates.json')['items'];
+
+        $dates = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id(), $available_dates ) )->available_dates_to_date_array();
+
+        $this->assertIsArray($dates);
+        $this->assertIsString($dates[0]);
+    }
+
+    public function testShouldReturnEmptyArrayWhenAvailableDatesNotSet() {
+        $this->setup_api_key();
+
+        $dates = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id() ) )->available_dates_to_date_array();
+
+        $this->assertIsArray($dates);
+        $this->assertEmpty($dates);
+    }
+
+    public function testShouldReturnFalseWhenAvailableDatesNotSet() {
+        $this->setup_api_key();
+
+        $available_dates_message = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id() ) )->get_available_dates_message();
+
+        $this->assertFalse($available_dates_message);
+    }
+
+    public function testShouldReturnMessageWhenAvailableDatesSet() {
+        $this->setup_api_key();
+
+        $available_dates = $this->get_data('freeDates.json')['items'];
+
+        // setup mock
+        $mock = $this->getMockBuilder(PushoverNotification::class)
+        ->setConstructorArgs( [
+            $this->get_test_center_id(),
+            $this->get_test_vaccine_id(),
+            $available_dates
+        ] )
+        ->setMethods(['available_dates_to_date_array'])
+        ->getMock();
+
+        $mock->method('available_dates_to_date_array')
+            ->willReturn( ['Mo 12.01.2022', 'Di 13.01.2022'] );
+
+        $message = $mock->get_available_dates_message();
 
         $this->assertNotEmpty($message);
         $this->assertIsString($message);

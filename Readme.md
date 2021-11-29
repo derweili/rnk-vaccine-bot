@@ -4,6 +4,14 @@ Bot der die interne API von https://c19.rhein-neckar-kreis.de/impftermin abfragt
 
 API Stand 27.11.2021
 
+
+## SaaS
+Ich habe diesen Bot auf meinem Server installiert und folgende Pushover Subscription eingerichtet:
+
+
+We möchte kann diese Abonnieren. Dafür muss nur ein Account bei pushover.net eingerichtet und über den Link https://pushover.net/subscribe/CoronaVaccine-bv894h72chwwxij die Subscription eingerichtet werden.
+Pushover.net bietet einen kostenfreien 30 Tage Testzeitraum an. Dieser reicht für die Subscription aus.
+
 ## Konfiguration
 
 1. `config.example.php` umbenennen in `config.php`

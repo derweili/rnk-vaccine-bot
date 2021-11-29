@@ -4,10 +4,41 @@ namespace Derweili\RnkBot;
 
 class RequestDate {
 
-	private $base_url = 'https://c19.rhein-neckar-kreis.de/data/getFreeDates';
+	private $request_dates_base_path = 'https://c19.rhein-neckar-kreis.de/data/getFreeDates';
+	private $request_times_base_path = 'https://c19.rhein-neckar-kreis.de/data/getFreeTimes';
 
 	private $center_id;
 	private $vaccine_id;
+
+	/**
+	 * Store if available dates are already requested
+	 */
+	private $requested_date = false;
+
+	/**
+	 * Store the available dates
+	 */
+	private $available_dates = [];
+
+	/**
+	 * Store the requested dates response body
+	 */
+	private $request_dates_response = false;
+
+	/**
+	 * Store if available times were requested
+	 */
+	private $requested_times = false;
+
+	/**
+	 * Store the available times
+	 */
+	private $available_times = [];
+
+	/**
+	 * Store the requested times response body
+	 */
+	private $request_times_response = false;
 
 	/**
 	 * Construct Request
@@ -35,7 +66,7 @@ class RequestDate {
 			'sec-fetch-dest: empty',
 			'referer: https://c19.rhein-neckar-kreis.de/impftermin',
 			'accept-language: de-DE,de;q=0.9,en-US;q=0.8,en;q=0.7',
-			'cookie: PatientTicketServiceHash=mkmkxo0vhsekgiy0eygnp1nj3ljn7b'
+			// 'cookie: PatientTicketServiceHash=mkmkxo0vhsekgiy0eygnp1nj3ljn7b'
 		];
 
 		return $headers;
@@ -51,12 +82,15 @@ class RequestDate {
 		return $data;
 	}
 
-	public function send_request() {
+	/**
+	 * Request available dates for a vaccine
+	 */
+	public function send_available_dates_request() {
 
 		$data = $this->get_request_data();
 
 		$ch = curl_init();
-		curl_setopt($ch, CURLOPT_URL, $this->base_url);
+		curl_setopt($ch, CURLOPT_URL, $this->request_dates_base_path);
 		curl_setopt($ch, CURLOPT_POST, 1);
 		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->get_all_headers());
 
@@ -73,18 +107,89 @@ class RequestDate {
 		return $data;
 	}
 
-	
-	public function has_dates() : bool {
-		$return_data = $this->send_request();
+	/**
+	 * Request available times for a vaccine and a date
+	 */
+	public function send_available_times_request( string $date ) {
 
-		if( ! isset( $return_data['status'] ) || $return_data['status'] != 'OK' )
-		return false;
+		$data = [
+			'teststationId' => $this->center_id,
+			'date' => $date,
+			'selfService' => true,
+		];
+
+		$ch = curl_init();
+		curl_setopt($ch, CURLOPT_URL, $this->request_times_base_path);
+		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $this->get_all_headers());
+
 		
+		curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($data));
+
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		$server_output = curl_exec ($ch);
+
+		curl_close ($ch);
+
+		$data = json_decode($server_output, true);
+		
+		return $data;
+	}
+
+	public function is_request_successfull( $request_response ) {
+		if( ! isset( $request_response['status'] ) || $request_response['status'] != 'OK' )
+				return false;
+			
 		// if no items
-		if( ! isset( $return_data['items'] ) || empty( $return_data['items'] ) )
+		if( ! isset( $request_response['items'] ) )
 			return false;
 
+		return true;
+	}
 
-		return count(  $return_data['items'] ) > 0;
+	/**
+	 * Get the available dates
+	 */
+	public function get_available_dates () {
+		if ( ! $this->requested_date ) {
+			$this->request_dates_response = $this->send_available_dates_request();
+			$this->requested_date = true;
+
+			if( ! $this->is_request_successfull( $this->request_dates_response ) ) {
+				return [];
+			}
+
+			$this->available_dates = $this->request_dates_response['items'];
+		}
+
+		return $this->available_dates;
+	}
+
+	
+	public function has_dates() : bool {
+		$available_dates = $this->get_available_dates();
+
+		return count(  $available_dates ) > 0;
+	}
+
+	public function get_available_times( string $date ) {
+		if ( ! $this->requested_times ) {
+			$this->request_times_response = $this->send_available_times_request( $date );
+			$this->requested_times = true;
+
+			if( ! $this->is_request_successfull( $this->request_times_response ) ) {
+				return [];
+			}
+
+			$this->available_times = $this->request_times_response['items'];
+		}
+
+		return $this->available_times;
+	}
+
+	public function has_times(string $date) : bool {
+		$available_times = $this->get_available_times( $date );
+
+		return count(  $available_times ) > 0;
 	}
 }
