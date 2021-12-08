@@ -19,4 +19,5 @@ set_time_limit(300);
 
 $bot = new Bot( $centers, $vaccines );
 
+echo '<pre>';
 $bot->run();
