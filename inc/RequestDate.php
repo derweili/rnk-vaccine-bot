@@ -2,6 +2,14 @@
 
 namespace Derweili\RnkBot;
 
+/**
+ * C19 Rhein-Neckar-Kreis API
+ * 
+ * Implements the C19 Rhein-Neckar-Kreis API
+ * Takes the center_id and vaccine_id as input
+ * Requests the available dates for the vaccine
+ * Requests the available times for a center
+ */
 class RequestDate {
 
 	private $request_dates_base_path = 'https://c19.rhein-neckar-kreis.de/data/getFreeDates';

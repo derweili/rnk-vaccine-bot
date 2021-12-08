@@ -2,6 +2,13 @@
 
 namespace Derweili\RnkBot;
 
+/**
+ * Pushover.net Notifications
+ * 
+ * Implements the Pushover.net API
+ * Takes the center_id and vaccine_id as input
+ * Builds the message and sends it to the Pushover.net API
+ */
 class PushoverNotification {
 
 	private $center_id;

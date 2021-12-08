@@ -2,6 +2,11 @@
 
 namespace Derweili\RnkBot;
 
+/**
+ * Vaccines
+ * 
+ * Holds all available with their id
+ */
 class Vaccines {
 
 
@@ -9,6 +14,7 @@ class Vaccines {
 		return [
 			2 => "Biontech",
 			// 3 => "Moderna"
+			// 5 => "Johnson & Johnson"
 		];
 	}
 
