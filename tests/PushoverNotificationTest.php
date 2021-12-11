@@ -52,7 +52,7 @@ final class PushoverNotificationTest extends TestCase
     }
 
     public function testShouldReturnFalseIfApiTokensAreNotConfigured() {
-        $is_configured = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id() ) )->is_configured();
+        $is_configured = (new PushoverNotification() )->is_configured();
 
         $this->assertFalse($is_configured);
     }
@@ -60,7 +60,7 @@ final class PushoverNotificationTest extends TestCase
     public function testShouldReturnFalseIfUserKeyIsNotConfigured() {
         $this->setup_app_token();
 
-        $is_configured = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id() ) )->is_configured();
+        $is_configured = (new PushoverNotification() )->is_configured();
 
         $this->assertFalse($is_configured);
     }
@@ -68,7 +68,7 @@ final class PushoverNotificationTest extends TestCase
     public function testShouldReturnFalseIfApiTokenIsNotConfigured() {
         $this->setup_user_key();
 
-        $is_configured = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id() ) )->is_configured();
+        $is_configured = (new PushoverNotification() )->is_configured();
 
         $this->assertFalse($is_configured);
     }
@@ -76,7 +76,7 @@ final class PushoverNotificationTest extends TestCase
     public function testShouldReturnTrueIfApiKeysAreConfigured() {
         $this->setup_api_key();
 
-        $is_configured = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id() ) )->is_configured();
+        $is_configured = (new PushoverNotification() )->is_configured();
 
         $this->assertTrue($is_configured);
     }
@@ -84,7 +84,7 @@ final class PushoverNotificationTest extends TestCase
     public function testShoudReturnNotificationMessage() {
         $this->setup_api_key();
 
-        $message = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id() ) )->get_available_vaccine_message();
+        $message = (new PushoverNotification() )->get_available_vaccine_message( $this->get_test_center_id(), $this->get_test_vaccine_id()  );
 
         $this->assertNotEmpty($message);
         $this->assertIsString($message);
@@ -95,7 +95,7 @@ final class PushoverNotificationTest extends TestCase
 
         $available_dates = $this->get_data('freeDates.json')['items'];
 
-        $dates = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id(), $available_dates ) )->available_dates_to_date_array();
+        $dates = (new PushoverNotification() )->available_dates_to_date_array( $available_dates );
 
         $this->assertIsArray($dates);
         $this->assertIsString($dates[0]);
@@ -104,7 +104,7 @@ final class PushoverNotificationTest extends TestCase
     public function testShouldReturnEmptyArrayWhenAvailableDatesNotSet() {
         $this->setup_api_key();
 
-        $dates = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id() ) )->available_dates_to_date_array();
+        $dates = (new PushoverNotification() )->available_dates_to_date_array();
 
         $this->assertIsArray($dates);
         $this->assertEmpty($dates);
@@ -113,7 +113,7 @@ final class PushoverNotificationTest extends TestCase
     public function testShouldReturnFalseWhenAvailableDatesNotSet() {
         $this->setup_api_key();
 
-        $available_dates_message = (new PushoverNotification($this->get_test_center_id(), $this->get_test_vaccine_id() ) )->get_available_dates_message();
+        $available_dates_message = (new PushoverNotification() )->get_available_dates_message([]);
 
         $this->assertFalse($available_dates_message);
     }
@@ -125,18 +125,14 @@ final class PushoverNotificationTest extends TestCase
 
         // setup mock
         $mock = $this->getMockBuilder(PushoverNotification::class)
-        ->setConstructorArgs( [
-            $this->get_test_center_id(),
-            $this->get_test_vaccine_id(),
-            $available_dates
-        ] )
+        ->setConstructorArgs( [] )
         ->setMethods(['available_dates_to_date_array'])
         ->getMock();
 
         $mock->method('available_dates_to_date_array')
             ->willReturn( ['Mo 12.01.2022', 'Di 13.01.2022'] );
 
-        $message = $mock->get_available_dates_message();
+        $message = $mock->get_available_dates_message( $available_dates );
 
         $this->assertNotEmpty($message);
         $this->assertIsString($message);
