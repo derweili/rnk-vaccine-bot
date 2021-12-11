@@ -72,7 +72,7 @@ class Bot {
 					echo 'Vaccine NOT Available: ' . $vaccine_name . ' - ' . $center_name . PHP_EOL;
 				}
 
-				// wait for 1 second
+				// wait between requests
 				$this->sleep();
 			}
 		}
@@ -87,7 +87,8 @@ class Bot {
 	}
 
 	public function sleep() {
-		sleep(0.5);
+		// wait 0.5 seconds
+		usleep(500000);
 	}
 
 	public function send_combined_notification( $available_appointments ) {
