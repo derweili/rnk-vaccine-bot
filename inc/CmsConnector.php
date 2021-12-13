@@ -68,7 +68,7 @@ class CmsConnector {
 			echo 'CMS Connection Error: ' . curl_error( $ch );
 			return;
 		} else {
-			// var_dump( $response );
+			var_dump( $response );
 		}
 
 		curl_close( $ch );
