@@ -6,6 +6,7 @@ class Bot {
 
 	private $centers = null;
 	private $vaccines = null;
+	private $cms_connector = null;
 
 	private $available_appointments = [];
 
@@ -15,6 +16,7 @@ class Bot {
 	public function __construct( Centers $centers, Vaccines $vaccines ) {
 		$this->centers = $centers;
 		$this->vaccines = $vaccines;
+		$this->cms_connector = new CmsConnector();
 	}
 
 	public function get_request_date_instance( $center_id, $vaccine_id ) {
@@ -58,6 +60,8 @@ class Bot {
 				$center_name = $this->centers->get_center_by_id( $center_id );
 				$vaccine_name = $this->vaccines->get_vaccine_by_id( $vaccine_id );
 				
+				$this->cms_connector->save_availability_status( $center_id, $vaccine_id, $is_available );
+
 				if( $is_available ) {
 					$this->add_available_appointment( $center_id, $vaccine_id ); 
 					echo 'Vaccine Available: ' . $vaccine_name . ' - ' . $center_name . PHP_EOL;
@@ -87,8 +91,8 @@ class Bot {
 	}
 
 	public function sleep() {
-		// wait 0.5 seconds
-		usleep(500000);
+		// wait 1 seconds
+		usleep(1000000);
 	}
 
 	public function send_combined_notification( $available_appointments ) {
