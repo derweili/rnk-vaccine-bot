@@ -30,8 +30,7 @@ class PushoverNotification {
 
 	public function send_available_vaccine_notification( $center_id, $vaccine_id ) {
 		
-		if( ! $this->is_configured() )
-			die('pushover not configured');
+		if( ! $this->is_configured() ) return;
 
 		$pushy = new \Pushy\Client(PUSHOVER_APP_TOKEN);
 		$user = new \Pushy\User(PUSHOVER_USER_KEY);
@@ -45,8 +44,7 @@ class PushoverNotification {
 
 	public function send_combined_available_vaccine_notification( $available_appointments ) {
 		
-		if( ! $this->is_configured() )
-			die('pushover not configured');
+		if( ! $this->is_configured() ) return;
 
 		// $message = $this->get_available_vaccine_message();
 
