@@ -39,6 +39,9 @@ class Centers {
 			81 => "Impfung Östringen - Johann-Sebastian-Bach-Straße 24, 76684 Östringen",
 			82 => "Impfung Linkenheim-Hochstetten - Rathausstraße 1, 76351 Linkenheim-Hochstetten",
 			83 => "Impfung Forst - Hambrücker Straße 59, 76694 Forst",
+			88 => "Impfung Patrick Henry (Kinder) - South-Gettysburg-Avenue 45, 69124 Heidelberg",
+			99 => "Impfung Patrick Henry 2 (Kinder) - South-Gettysburg-Avenue 45, 69124 Heidelberg",
+			99 => "Impfung Sinsheim (Kinder) - Breite Seite 3, 74889 Sinsheim",
 		];
 	}
 
