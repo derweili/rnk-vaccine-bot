@@ -25,9 +25,9 @@ final class CentersTest extends TestCase
         $this->assertEquals($exprected_name, $center);
     }
 
-    public function testShouldReturnFAlseIfCenterIdInvalid() : void
+    public function testShouldReturnFalseIfCenterIdInvalid() : void
     {
-        $center = Centers::get_center_by_id(99);
+        $center = Centers::get_center_by_id(999999999);
 
         $this->assertFalse($center);
     }
